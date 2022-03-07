@@ -1,17 +1,43 @@
-// this creates a function name "fight"
+var playerName = window.prompt("What is your robot's name?");
+var playerHealth = 100;
+var playerAttack = 10;
 
-function fight() {
-    window.alert("The fight has begun!");
-}
+// You can also log multiple values at once like this
+console.log(playerName, playerAttack, playerHealth);
 
-var playerName = window.prompt("What is you robo's name?");
-console.log(playerName);
+var enemyName = "Roborto";
+var enemyHealth = 50;
+var enemyAttack = 12;
 
-console.log("This logs a string, good for leaving yourself a message");
+var fight = function() {
+    // Alert players that they are starting the round
+    window.alert("Welcome to Robot Gladiators!");
 
-// This will do math and log 20
-console.log(10+10);
+    // Subtract the value of 'playerAttact' from the value of 'enemyHeath'
+    enemyHealth = enemyHealth - playerAttack;
 
-console.log("Our robot's name is " + playerName);
+    // Log a resulting message to the console so we know that it worked
+    console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
 
-// fight();
+    // check enemy health
+    if (enemyHealth <= 0) {
+        window.alert(enemyName + " had died!");
+    } else {
+        window.alert(enemyName + " still has " + enemyHealth + " health left.");
+    }
+
+    // Subtract the value of 'enemyAttact' from the value of 'playerHealth'
+    playerHealth = playerHealth - enemyAttack;
+
+    // Log a resulting message to the console so we know that it worked.
+    console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
+
+    // check players health
+    if (playerHealth <= 0) {
+        window.alert(playerName + " has died.");
+    } else {
+        window.alert(playerName + " still has " + playerHealth + " health left.");
+    }
+};
+
+fight();
