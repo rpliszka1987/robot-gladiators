@@ -104,7 +104,7 @@ var startGame = function() {
                 
             }
         } else {
-            windoes.alert("YOu have lost your robot in battle! Game Over!");
+            windoes.alert("You have lost your robot in battle! Game Over!");
             break;
         }
     }
