@@ -5,28 +5,40 @@
 // "LOOSE" - Player robot's health is zero or less
 
 
+var fightOrSkip = function() {
+    // Ask player if they like to fight or run
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to chose.");
+    promptFight = promptFight.toLowerCase();
+
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+
+    // if player picks "skip" confirm and stop the loop
+    if (promptFight === "skip"){
+        // Confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        // if yes (true), leave fight
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye");
+            // Subtract money
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        }
+    }
+    return false;
+};
 
 
 // Fight Function
 var fight = function(enemy) {
     // repeat and execcute as long as the enemy-robot is alive
     while(playerInfo.health > 0 && enemy.health > 0){
-        // Ask player if they like to fight or run
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to chose.");
-
-        // if player picks "skip" confirm and stop the loop
-        if (promptFight === "skip" || promptFight === "SKIP"){
-            // Confirm player wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-            // if yes (true), leave fight
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has decided to skip this fight. Goodbye");
-                // Subtract money
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerMoney", playerInfo.money);
-                break;
-            }
+       
+        if (fightOrSkip()) {
+            break;
         }
 
         //  remove enemy's heath by subtractiong the amount set in the playerAttack variable
