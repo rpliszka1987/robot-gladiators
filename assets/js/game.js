@@ -34,43 +34,56 @@ var fightOrSkip = function() {
 
 // Fight Function
 var fight = function(enemy) {
+    // keep track who goes first
+    var isPlayerTurn = true;
+
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+    }
     // repeat and execcute as long as the enemy-robot is alive
     while(playerInfo.health > 0 && enemy.health > 0){
-       
-        if (fightOrSkip()) {
-            break;
-        }
 
-        //  remove enemy's heath by subtractiong the amount set in the playerAttack variable
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-        enemy.health = Math.max(0, enemy.health - damage);
-        console.log(playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health reamining.');
+        if (isPlayerTurn) {
+            // ask player if they'd like to fight or skip using fightOrSkip
+            if (fightOrSkip()) {
+                break;
+            }
 
-        // Check enemy health
-        if (enemy.health <= 0) {
-            window.alert(enemy.name + " had died!");
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
-            // award player money for winning
-            playerInfo.money = playerInfo.money + 20;
-            // leave while() loop since enemy dead
-            break;
+            enemy.health = Math.max(0, enemy.health - damage);
+            console.log(playerInfo.name + ' attacked ' + enemy.name + '. ' + enemy.name + ' now has ' + enemy.health + ' health reamining.');
+    
+            // Check enemy health
+            if (enemy.health <= 0) {
+                window.alert(enemy.name + " had died!");
+
+                // award player money for winning
+                playerInfo.money = playerInfo.money + 20;
+                // leave while() loop since enemy dead
+                break;
+            } else {
+                window.alert(enemy.name + " still has " + enemy.health + " health left.");
+            }
+            // player gets attacked first
         } else {
-            window.alert(enemy.name + " still has " + enemy.health + " health left.");
-        }
+            var damage = randomNumber(enemy.attack - 3, enemy.attack);
+             // Subtract the value of 'enemyAttact' from the value of 'playerHealth'
+            playerInfo.health = Math.max(0, playerInfo.health - enemy.attack);
 
-         // Subtract the value of 'enemyAttact' from the value of 'playerHealth'
-         playerInfo.health = Math.max(0, playerInfo.health - enemy.attack);
+            // Log a resulting message to the console so we know that it worked.
+            console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
 
-         // Log a resulting message to the console so we know that it worked.
-         console.log(enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
-
-         // check players health
-         if (playerInfo.health <= 0) {
-            window.alert(playerInfo.name + " has died.");
-            break;
-        } else {
-            window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            // check players health
+            if (playerInfo.health <= 0) {
+                window.alert(playerInfo.name + " has died.");
+                break;
+            } else {
+                window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            }
         } 
+        // switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
     } // end of while loop   
 }; // end of function
 
